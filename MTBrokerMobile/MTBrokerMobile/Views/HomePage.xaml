@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MTBrokerMobile.Views.HomePage"
+             xmlns:valueConverter="clr-namespace:MTBrokerMobile.ValueConverters"
+             xmlns:StaticVariables="clr-namespace:MTBrokerMobile.StaticHelpers"
+             Title="{x:Static StaticVariables:StaticVariables.Home}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="outline_published_with_changes_black_24dp.png" />
+        <ToolbarItem IconImageSource="outline_gps_fixed_black_24dp.png" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <valueConverter:MutuallyExclusiveVisibConverter x:Key="mutuallyExclusiveVisbConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView
+            VerticalOptions="CenterAndExpand"
+            Orientation="Both">
+            <Frame>
+                <StackLayout                
+                Orientation="Vertical"
+                Spacing="40">
+
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Title"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="MT Broker"/>
+
+                    <Label
+                        FontAttributes="Italic"
+                        FontSize="Subtitle"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="MT all the way"/>
+
+
+                    <Label
+                        IsVisible="{Binding UserIsLoggedIn}"
+                        Style="{DynamicResource descriptionLabelStyles}"
+                        Text="You are logged in"
+                        x:Name="lblUserIsLoggedIn"/>
+
+                
+
+                    <Button                    
+                    Command="{Binding LoginCommand}"
+                        IsVisible="{Binding Path= IsVisible, Source={x:Reference lblUserIsLoggedIn}, Converter={StaticResource mutuallyExclusiveVisbConverter}}"
+                    Style="{DynamicResource normalButtonStyles}"
+                    Text="{x:Static  StaticVariables:StaticVariables.Login}"/>
+                    
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>

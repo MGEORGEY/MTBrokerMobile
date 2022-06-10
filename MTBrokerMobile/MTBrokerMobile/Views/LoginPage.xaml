@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MTBrokerMobile.Views.LoginPage"
+             xmlns:valueConverter="clr-namespace:MTBrokerMobile.ValueConverters"
+             xmlns:StaticVariables="clr-namespace:MTBrokerMobile.StaticHelpers"
+             Title="{x:Static StaticVariables:StaticVariables.Login}">
+
+    <ContentPage.Resources>
+        <valueConverter:MutuallyExclusiveVisibConverter x:Key="mutuallyExclusiveVisbConverter"/>        
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <ScrollView
+            Orientation="Both"
+            VerticalOptions="CenterAndExpand">
+            <Frame
+            Margin="20">
+
+                <StackLayout
+                Orientation="Vertical">
+
+                    <Image                        
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="Start"
+                        Source="outline_arrow_back_black_24dp.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                            Command="{Binding CancelCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+
+
+                    <Label
+                        Style="{DynamicResource listViewButtonLabelStyles}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span
+                                    Text="Username:user
+                                    Password:User@123"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Frame                
+                    Style="{DynamicResource entryContainerFrameStyles}">
+
+                        <StackLayout                    
+                        Style="{DynamicResource frameContainerStackLayoutStyles}">
+
+                            <Label
+                            Style="{DynamicResource descriptionLabelStyles}"
+                            Text="USERNAME"/>
+
+                            <Entry
+                            Style="{DynamicResource normalEntryStyles}"
+                            Text="{Binding UsernameOrEmailAddress}"/>
+
+                            <Label
+                            Style="{DynamicResource descriptionLabelStyles}"
+                            Text="PASSWORD"/>
+
+                            <Entry
+                            IsPassword="True"
+                            Style="{DynamicResource normalEntryStyles}"
+                            Text="{Binding Password}"/>
+
+                            <ActivityIndicator
+                            IsVisible="{Binding IsBusy}"
+                            IsRunning="{Binding IsBusy}"
+                            Style="{DynamicResource normalActivityIndicatorStyles}"/>
+
+                            <Button
+                            Command="{Binding LoginCommand}"
+                            Style="{DynamicResource normalButtonStyles}"
+                            Text="LOGIN"/>
+
+                        </StackLayout>
+
+                    </Frame>
+
+                </StackLayout>
+
+            </Frame>
+        </ScrollView>
+
+
+    </ContentPage.Content>
+
+</ContentPage>

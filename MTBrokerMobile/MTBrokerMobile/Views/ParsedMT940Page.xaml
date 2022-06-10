@@ -1,0 +1,484 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MTBrokerMobile.Views.ParsedMT940Page"
+             xmlns:StaticVariables="clr-namespace:MTBrokerMobile.StaticHelpers"
+             xmlns:userControls="clr-namespace:MTBrokerMobile.UserControls"
+             xmlns:valueConverter="clr-namespace:MTBrokerMobile.ValueConverters"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Name="workPage">
+
+    <ContentPage.Resources>
+        <valueConverter:MutuallyExclusiveVisibConverter x:Key="mutuallyExclusiveVisbConverter"/>
+        <valueConverter:DebitOrCreditLabelStyleConverter x:Key="debitOrCreditLabelStyleConverter"/>
+        <valueConverter:DebitOrCreditTextConverter x:Key="debitOrCreditTextConverter"/>        
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <Grid
+            ColumnDefinitions="*"
+            RowDefinitions="Auto,*"
+            Style="{DynamicResource containerGridStyles}">
+
+            <Grid
+                Grid.Row="0"
+                ColumnDefinitions="*,*,*,*"
+                RowDefinitions="Auto,Auto,Auto"
+                Style="{DynamicResource containerGridStyles}">
+
+                <Image  
+                    Grid.Column="0"
+                    Grid.Row="0"
+                        HorizontalOptions="StartAndExpand"
+                    IsVisible="{Binding IsInAutoMode, Converter={StaticResource mutuallyExclusiveVisbConverter}}"
+                        VerticalOptions="Start"
+                        Source="outline_arrow_back_black_24dp.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding CancelCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Style="{DynamicResource descriptionLabelStyles}"
+                    Text="Refresh">
+
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding RefreshCommand}"/>
+                    </Label.GestureRecognizers>
+
+                </Label>
+
+                <Label
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    Style="{DynamicResource descriptionLabelStyles}"
+                    Text="Download as Excel">
+
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding DownloadXLSXCommand}"/>
+                    </Label.GestureRecognizers>
+                    
+                </Label>
+
+                <!--<Label
+                    Grid.Column="3"                    
+                    Grid.Row="0"
+                    Style="{DynamicResource descriptionLabelStyles}"
+                    Text="Download as PDF">
+
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding DownloadPDFCommand}"/>
+                    </Label.GestureRecognizers>
+
+                </Label>-->
+
+                <!--#region PARAMETERS-->
+                <!--<Frame
+                    Grid.Column="0"    
+                    Grid.ColumnSpan="4"
+                    Grid.Row="1"
+                        BorderColor="{DynamicResource Primary}"
+                        Style="{DynamicResource entryContainerFrameStyles}">
+                    <xct:Expander>
+                        <xct:Expander.Header>
+
+                            <Grid>
+
+
+                                <Label 
+                                        Style="{DynamicResource expanderHeaderLabelStyles}"
+                                        Text="Customize"/>
+
+                                <Image 
+                                    Source="outline_expand_more_black_24dp.png"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Start">
+                                    <Image.Triggers>
+                                        <DataTrigger 
+                                            TargetType="Image"
+                                            Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}},
+                                            Path=IsExpanded}"
+                                            Value="True">
+                                            <Setter 
+                                                Property="Source"
+                                                Value="outline_expand_less_black_24dp.png" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                            </Grid>
+
+                        </xct:Expander.Header>
+
+
+                        <Frame                
+                    Style="{DynamicResource entryContainerFrameStyles}">
+
+                            <StackLayout                    
+                        Style="{DynamicResource frameContainerStackLayoutStyles}">
+
+                                <Label
+                            Style="{DynamicResource descriptionLabelStyles}"
+                            Text="Order by date asc.">
+
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding OrderByDateAscCommand}"/>
+                                    </Label.GestureRecognizers>
+
+                                </Label>
+
+                                <Label
+                            Style="{DynamicResource descriptionLabelStyles}"
+                            Text="Order by date desc.">
+
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding BindingContext.OrderByDateDescCommand, Source= {x:Reference workPage}}"/>
+                                    </Label.GestureRecognizers>
+
+                                </Label>
+
+                                <Label
+                            Style="{DynamicResource descriptionLabelStyles}"
+                            Text="Hide/Show Block 1">
+
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                            Command="{Binding ToggleBlock1Command}"/>
+                                </Label.GestureRecognizers>
+
+                                </Label>
+
+                            </StackLayout>
+
+                        </Frame>
+
+                    </xct:Expander>
+                </Frame>-->
+                <!--#endregion-->
+
+                <ActivityIndicator                    
+                    Grid.Column="0"                    
+                    Grid.ColumnSpan="4"
+                    Grid.Row="2"
+                            IsVisible="{Binding IsBusy}"
+                            IsRunning="{Binding IsBusy}"
+                            Style="{DynamicResource normalActivityIndicatorStyles}"/>
+
+            </Grid>
+
+            <ListView                
+                Grid.Row="1"     
+                SeparatorColor="{DynamicResource Primary}"
+                    ItemsSource="{Binding MT940CRTs}"
+                    Style="{DynamicResource entityCollectionListViewStyles}"
+                                    x:Name="listViewRecords"
+                    x:FieldModifier="public">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout
+                                    Orientation="Vertical">
+
+                                <!--FIN SWIFT ADDRESS-->
+                                <StackLayout
+                                    IsVisible="{Binding ShowBlock1, Converter={StaticResource mutuallyExclusiveVisbConverter}}"
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                    <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.FinSwiftAddress}"/>
+
+                                    <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding MT940MonoCRT.FinSwiftAddress}"/>
+
+                                </StackLayout>
+
+                                <!--FIN LT CODE-->
+                                <StackLayout
+                                    IsVisible="{Binding ShowBlock1, Converter={StaticResource mutuallyExclusiveVisbConverter}}"
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                    <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.FinLTCode}"/>
+
+                                    <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding MT940MonoCRT.FinLTCode}"/>
+
+                                </StackLayout>
+
+                                <!--FIN BRANCH CODE-->
+                                <StackLayout
+                                    IsVisible="{Binding ShowBlock1, Converter={StaticResource mutuallyExclusiveVisbConverter}}"
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                    <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.FinBranchCode}"/>
+
+                                    <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding MT940MonoCRT.FinBranchCode}"/>
+
+                                </StackLayout>
+
+                                <!--ACCOUNT ID-->
+                                <StackLayout
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                    <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.AccountID25}"/>
+
+                                    <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding MT940MonoCRT.AccountID25}"/>
+
+                                </StackLayout>
+
+                                <!--TRANSACTION REFERENCE-->
+                                <StackLayout
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                    <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.TransactionRefNo20}"/>
+
+                                    <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding MT940MonoCRT.TransactionRefNo20}"/>
+
+                                </StackLayout>
+
+                                <!--OPENING BALANCE-->
+                                <StackLayout
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                    <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.OpeningBalance60FAmount}"/>
+
+                                    <StackLayout
+                                            Orientation="Horizontal">
+
+                                        <Label
+                                                Style="{DynamicResource listViewContentLabelStyles}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span
+                                                            Text="{Binding MT940MonoCRT.OpeningBalance60FCurrency}"/>
+                                                    <Span
+                                                            Text=" "/>
+
+                                                    <Span
+                                                            Text="{Binding MT940MonoCRT.OpeningBalance60FAmount}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                    </StackLayout>
+
+                                </StackLayout>
+
+                                <!--CLOSING AVILABLE BALANCE-->
+                                <StackLayout
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                    <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.AvailableBalance64Amount}"/>
+
+                                    <StackLayout
+                                            Orientation="Horizontal">
+
+                                        <Label
+                                                Style="{DynamicResource listViewContentLabelStyles}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span
+                                                            Text="{Binding MT940MonoCRT.AvailableBalance64Currency}"/>
+                                                    <Span
+                                                            Text=" "/>
+
+                                                    <Span
+                                                            Text="{Binding MT940MonoCRT.AvailableBalance64Amount}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                    </StackLayout>
+
+
+                                </StackLayout>
+
+                                <!--CLOSING BALANCE-->
+                                <StackLayout
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                    <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.ClosingBalance62FAmount}"/>
+
+                                    <StackLayout
+                                            Orientation="Horizontal">
+
+                                        <Label
+                                                Style="{DynamicResource listViewContentLabelStyles}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span
+                                                            Text="{Binding MT940MonoCRT.ClosingBalance62FCurrency}"/>
+                                                    <Span
+                                                            Text=" "/>
+
+                                                    <Span
+                                                            Text="{Binding MT940MonoCRT.ClosingBalance62FAmount}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                    </StackLayout>
+
+                                </StackLayout>
+
+                                <Grid
+                                        ColumnDefinitions="*,*">
+
+                                    <!--Message Sequence Number-->
+                                    <StackLayout
+                                            Grid.Column="0"
+                                            Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                        <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.StatementOrSeqNo28CMsgSeq}"/>
+
+                                        <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding MT940MonoCRT.StatementOrSeqNo28CMsgSeq}"/>
+
+                                    </StackLayout>
+
+                                    <!--Date-->
+                                    <StackLayout
+                                            Grid.Column="1"
+                                            Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                        <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.Date}"/>
+
+                                        <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding MT940MonoCRT.OpeningBalance60FDate, StringFormat='{}{0:MMM dd, yyyy}'}"/>
+
+                                    </StackLayout>
+
+                                </Grid>
+
+                                <userControls:ItemsControl
+                                            ItemsSource="{Binding Tag61And86GroupCRTs}">
+                                    <userControls:ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Frame
+                                                        Style="{DynamicResource labelDecoratorFrameStyles}">
+
+                                                <StackLayout
+                                                        Orientation="Vertical">
+
+                                                    <!--CUSTOMER REFERENCE-->
+                                                    <StackLayout
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                                        <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.StatementLine61CustomerRef}"/>
+
+                                                        <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding StatementLine61CustomerRef}"/>
+
+                                                    </StackLayout>
+
+                                                    <!--DOrC AND AMOUNT-->
+                                                    <StackLayout
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                                        <Label
+                                                                Style="{Binding StatementLine61DOrC, Converter={StaticResource debitOrCreditLabelStyleConverter}}">
+
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span
+                                                                            Text="{Binding StatementLine61DOrC, Converter={StaticResource debitOrCreditTextConverter}}"/>
+
+                                                                    <Span Text=" "/>
+
+                                                                    <Span
+                                                                            Text="{Binding StatementLine61Amount}"/>
+
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+
+                                                        </Label>
+
+
+                                                    </StackLayout>
+
+
+                                                    <!--CONTINUATION-->
+                                                    <StackLayout
+                                        Orientation="Vertical"
+                                    Style="{DynamicResource listViewContainerStackLayoutStyles}">
+
+                                                        <Label
+                                            Style="{DynamicResource listVwDescriptionLabelStyles}"
+                                            Text="{x:Static StaticVariables:StaticVariables.Continuation}"/>
+
+                                                        <Label
+                                            Style="{DynamicResource listViewContentLabelStyles}"
+                                            Text="{Binding AccOwnerInfo86Info}"/>
+
+                                                    </StackLayout>
+
+
+                                                </StackLayout>
+
+                                            </Frame>
+
+                                        </DataTemplate>
+                                    </userControls:ItemsControl.ItemTemplate>
+                                </userControls:ItemsControl>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>                
+            </ListView>
+            
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

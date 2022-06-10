@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MTBrokerMobile.App">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">Maroon</Color>
+
+
+            <x:Double x:Key="containerPadding">10</x:Double>
+            <x:Double x:Key="GridContainerPadding">5</x:Double>
+            <x:Double x:Key="GridContainerRowSpacing">5</x:Double>
+            <x:Int32 x:Key="ViewsCornerRadius">10</x:Int32>
+            <Color x:Key="ViewsTextColor">#FFFFFF</Color>
+            <Color x:Key="DarkViewsTextColor">#121212</Color>
+            <OnIdiom x:TypeArguments="Thickness" x:Key="controlMargins" Default="0,0,0,10" Desktop="20,20,20,40" Phone="0,0,0,10" Tablet="0,0,0,10" TV="0,0,0,10" Watch="0,0,0,10"/>
+
+            <!--#region ACTIVITY INDICATOR STYLES -->
+            <Style TargetType="ActivityIndicator" x:Key="normalActivityIndicatorStyles">
+                <Setter Property="Color" Value="{StaticResource Primary}" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region BUTTON STYLES -->
+            <Style TargetType="Button" x:Key="generalButtonStyles">
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="CornerRadius" Value="{StaticResource ViewsCornerRadius}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="Margin" Value="0,5" />
+                <Setter Property="TextColor" Value="{StaticResource ViewsTextColor}" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            </Style>
+
+
+            <Style TargetType="Button" BasedOn="{StaticResource generalButtonStyles}" x:Key="normalButtonStyles">
+                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+            </Style>
+
+
+            <Style TargetType="Button" BasedOn="{StaticResource generalButtonStyles}" x:Key="deleteButtonStyles">
+                <Setter Property="BackgroundColor" Value="Red" />
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region CHECKBOX STYLES -->
+            <Style TargetType="CheckBox" x:Key="checkBoxStyles">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="Color" Value="{StaticResource Primary}" />
+            </Style>
+
+            <!--#endregion-->
+
+
+
+            <!--#region DATE PICKER STYLES -->
+            <Style TargetType="DatePicker" x:Key="datePickerBaseStyles">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+
+            <Style TargetType="DatePicker" x:Key="datePickerStyles">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region EDITOR STYLES -->
+            <Style TargetType="Editor" x:Key="baseEditorStyles">
+                <Setter Property="AutoSize" Value="TextChanges" />
+                <Setter Property="IsSpellCheckEnabled" Value="True" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+
+            <Style TargetType="Editor" BasedOn="{StaticResource baseEditorStyles}" x:Key="normalEditorStyles">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region ENTRY STYLES -->
+            <Style TargetType="Entry" x:Key="baseEntryStyles">
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Entry" BasedOn="{StaticResource baseEntryStyles}" x:Key="normalEntryStyles">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region FLEX LAYOUT STYLES -->
+            <Style TargetType="FlexLayout" x:Key="flexLayoutContainerBaseStyles">
+                <Setter Property="AlignItems" Value="Stretch" />
+                <Setter Property="JustifyContent" Value="SpaceEvenly" />
+                <Setter Property="Wrap" Value="NoWrap" />
+            </Style>
+
+
+            <Style TargetType="FlexLayout" BasedOn="{StaticResource flexLayoutContainerBaseStyles}" x:Key="flexLayoutContainerStyles">
+                <Setter Property="Direction" Value="Column" />
+                <Setter Property="Padding" Value="{StaticResource containerPadding}" />
+            </Style>
+
+
+            <Style TargetType="FlexLayout" BasedOn="{StaticResource flexLayoutContainerBaseStyles}" x:Key="flexLayoutExpandableStyles">
+                <Setter Property="Direction" Value="Row" />
+                <Setter Property="Padding">
+                    <Setter.Value>
+                        <OnIdiom x:TypeArguments="Thickness" Default="5" Desktop="15" TV="25"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region FRAME STYLES -->
+            <Style TargetType="Frame" x:Key="labelDecoratorFrameStyles">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+
+            <Style TargetType="Frame" x:Key="entryContainerFrameStyles">
+                <Setter Property="HasShadow" Value="False" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region GRID STYLES -->
+            <Style TargetType="Grid" x:Key="gridStyles">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            </Style>
+
+
+            <Style TargetType="Grid" BasedOn="{StaticResource gridStyles}" x:Key="containerGridStyles">
+                <Setter Property="Margin" Value="{DynamicResource controlMargins}" />
+                <Setter Property="Padding" Value="{StaticResource GridContainerPadding}" />
+                <Setter Property="RowSpacing" Value="{StaticResource GridContainerRowSpacing}" />
+            </Style>
+
+            <!--#endregion-->
+
+
+            <!--#region IMAGE STYLES -->
+            <Style TargetType="Image" x:Key="generalImageStyles">
+                <Setter Property="Aspect" Value="AspectFit" />
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="WidthRequest" Value="100" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region LABEL STYLES -->
+            <Style TargetType="Label" x:Key="centredLabelStyles">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="departmentHeaderLabelStyles">
+                <Setter Property="TextColor" Value="Blue" />
+                <Setter Property="FontAttributes" Value="Italic" />
+                <Setter Property="FontSize" Value="Body" />
+            </Style>
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="descriptionLabelStyles">
+                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+            </Style>
+
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="entityValueLabelStyles">
+                <Setter Property="FontSize" Value="Subtitle" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="expanderHeaderLabelStyles">
+                <Setter Property="FontSize" Value="Subtitle" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="titleLabelStyles">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="Title" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="listViewButtonLabelStyles">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+            </Style>
+
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="listViewContentLabelStyles">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource ViewsTextColor}, Default={StaticResource DarkViewsTextColor}, Light={StaticResource DarkViewsTextColor}}" />
+            </Style>
+
+            <Style TargetType="Label" BasedOn="{StaticResource listViewContentLabelStyles}" x:Key="listViewContentDOrCLabelStyles">
+                <Setter Property="TextColor" Value="Crimson" />
+            </Style>
+
+            <Style TargetType="Label" BasedOn="{StaticResource descriptionLabelStyles}" x:Key="listVwDescriptionLabelStyles">
+            </Style>
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="listViewHeaderLabelStyles">
+                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+            </Style>
+
+            <Style TargetType="Label" BasedOn="{StaticResource centredLabelStyles}" x:Key="verticalUserCtrlLabelStyles">
+                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                <Setter Property="VerticalOptions" Value="StartAndExpand"/>
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region LIST VIEW STYLES -->
+            <Style TargetType="ListView" x:Key="entityCollectionListViewStyles">
+                <Setter Property="HasUnevenRows" Value="True" />
+                <Setter Property="IsPullToRefreshEnabled" Value="False" />
+                <Setter Property="Margin" Value="0,0,5,0" />
+                <Setter Property="RefreshControlColor" Value="{DynamicResource Primary}" />
+                <Setter Property="SeparatorColor" Value="{DynamicResource Primary}" />
+                <Setter Property="SeparatorVisibility" Value="Default" />
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region PICKER STYLES -->
+            <Style TargetType="Picker" x:Key="generalPickerBaseStyles">
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+
+                <Setter Property="TitleColor" Value="{StaticResource Primary}" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+
+            <Style TargetType="Picker" BasedOn="{StaticResource generalPickerBaseStyles}" x:Key="generalPickerStyles">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region RADIO BUTTON STYLES -->
+            <Style TargetType="RadioButton" x:Key="radioButtonStyles">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+
+
+            <!--#region SCROLLVIEWER STYLES -->
+
+            <Style TargetType="ScrollView" x:Key="gridContainerScrollViewerStyles">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="HorizontalScrollBarVisibility" Value="Default" />
+                <Setter Property="Padding">
+                    <Setter.Value>
+                        <OnIdiom x:TypeArguments="Thickness" Default="0" Desktop="40,0" Phone="0" Tablet="0" TV="40,0" Watch="0"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="VerticalScrollBarVisibility" Value="Default" />
+                <Setter Property="Orientation" Value="Both" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            </Style>
+            <!--#endregion-->
+
+
+            <!--#region SEARCHBAR STYLES -->
+            <Style TargetType="SearchBar" x:Key="searhBarStyles">
+                <Setter Property="CancelButtonColor" Value="{StaticResource Primary}" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource Primary}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="TextTransform" Value="Lowercase" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+            <!--#endregion-->
+
+
+            <!--#region STACKLAYOUT STYLES -->
+            <Style TargetType="StackLayout" x:Key="containerStackLayoutStyles">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="Padding" Value="{StaticResource containerPadding}" />
+                <Setter Property="Spacing" Value="20" />
+            </Style>
+
+
+            <Style TargetType="StackLayout" x:Key="descriptorLabelStackLayoutStyles">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Spacing" Value="10" />
+            </Style>
+
+            <Style TargetType="StackLayout" x:Key="frameContainerStackLayoutStyles">
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="Spacing" Value="20" />
+            </Style>
+
+            <Style TargetType="StackLayout" x:Key="listViewContainerStackLayoutStyles">
+                <Setter Property="Margin" Value="0,5,0,0" />
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Spacing" Value="{DynamicResource GridContainerRowSpacing}" />
+            </Style>
+
+            <!--#endregion-->
+
+
+            <!--#region SWITCH STYLES -->
+            <Style TargetType="Switch" x:Key="switchStyles">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="OnColor" Value="{StaticResource Primary}"/>
+                <Setter Property="ThumbColor" Value="{StaticResource ViewsTextColor}"/>
+            </Style>
+
+            <!--#endregion-->
+
+
+            <!--#region TIME PICKER STYLES -->
+            <Style TargetType="TimePicker" x:Key="timePickerStyles">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+
+            <!--#endregion-->
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

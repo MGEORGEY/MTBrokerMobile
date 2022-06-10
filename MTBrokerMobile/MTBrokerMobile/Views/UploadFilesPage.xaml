@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MTBrokerMobile.Views.UploadFilesPage"
+             xmlns:StaticVariables="clr-namespace:MTBrokerMobile.StaticHelpers">
+    <ContentPage.Content>
+        <StackLayout>
+
+           
+            <Label
+                Style="{DynamicResource titleLabelStyles}"
+                Text="{x:Static StaticVariables:StaticVariables.ChooseFilesToUpload}">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding ChooseFilesCommand}"/>
+                </Label.GestureRecognizers>
+
+            </Label>
+
+
+            <ActivityIndicator
+                            IsVisible="{Binding IsBusy}"
+                            IsRunning="{Binding IsBusy}"
+                            Style="{DynamicResource normalActivityIndicatorStyles}"/>
+
+            <Button                    
+                    Command="{Binding UploadFilesCommand}"
+                    Style="{DynamicResource normalButtonStyles}"
+                    Text="{x:Static  StaticVariables:StaticVariables.UploadFiles}"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
